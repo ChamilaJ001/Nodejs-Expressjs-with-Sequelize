@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/product.css" />
+    <link rel="stylesheet" href="/css/cart.css" />
+  </head>
+
+  <body>
+    <%- include('../includes/navigation.ejs') %>
+    <main>
+      <% if (products.length > 0) { %>
+      <ul class="cart__item-list">
+        <% products.forEach(p => { %>
+        <li class="cart__item">
+          <h1><%= p.title %></h1>
+          <h2>Quantity: <%= p.cartItem.quantity %></h2>
+          <form action="/cart-delete-item" method="POST">
+            <input type="hidden" name="productId" value="<%= p.id %>" />
+            <button class="cart-delete-btn" type="submit">Delete</button>
+          </form>
+        </li>
+        <% }) %>
+      </ul>
+      <hr />
+      <div class="centerd">
+        <form action="/create-order" method="POST">
+          <button class="btn" type="submit">Order Now!</button>
+        </form>
+      </div>
+      <% } else{ %>
+
+      <h1>Cart is Empty...!</h1>
+      <% } %>
+    </main>
+    <%-include('../includes/end.ejs') %>
+  </body>
+</html>
